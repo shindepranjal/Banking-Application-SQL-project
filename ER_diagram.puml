@@ -1,0 +1,59 @@
+
+@startuml Banking_ER
+' Entities
+entity "branches" as branches {
+  *branch_id : SERIAL
+  name : VARCHAR
+  address : TEXT
+  phone : VARCHAR
+}
+
+entity "customers" as customers {
+  *customer_id : SERIAL
+  first_name
+  last_name
+  email
+  phone
+}
+
+entity "employees" as employees {
+  *employee_id
+  branch_id
+  first_name
+  last_name
+  role
+}
+
+entity "accounts" as accounts {
+  *account_id
+  customer_id
+  branch_id
+  account_type
+  balance
+}
+
+entity "transactions" as transactions {
+  *transaction_id
+  account_id
+  related_account_id
+  txn_type
+  amount
+  balance_after
+  txn_at
+}
+
+entity "loans" as loans {
+  *loan_id
+  account_id
+  principal
+  interest_rate
+  outstanding
+}
+
+branches ||--o{ employees : employs
+branches ||--o{ accounts : houses
+customers ||--o{ accounts : owns
+accounts ||--o{ transactions : "has >"
+accounts ||--o{ loans : "may have >"
+
+@enduml
